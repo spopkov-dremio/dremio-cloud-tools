@@ -24,12 +24,15 @@ spec:
         dremio-configmap/checksum: {{ (tpl ($.Files.Glob "config/*").AsConfig $) | sha256sum }}
         {{- include "dremio.coordinator.podAnnotations" $ | nindent 8 }}
     spec:
+      hostAliases: {{- .Values.hostAliases | toYaml | nindent 8 }}
       {{- include "dremio.coordinator.serviceAccount" $ | nindent 6 }}
       terminationGracePeriodSeconds: 120
       {{- include "dremio.coordinator.nodeSelector" $ | nindent 6 }}
       {{- include "dremio.coordinator.tolerations" $ | nindent 6 }}
       containers:
       - name: dremio-coordinator
+        securityContext:
+          runAsUser: 0
         image: {{ $.Values.image }}:{{ $.Values.imageTag }}
         imagePullPolicy: IfNotPresent
         resources:
