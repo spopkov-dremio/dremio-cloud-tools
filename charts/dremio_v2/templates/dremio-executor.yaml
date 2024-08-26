@@ -28,6 +28,10 @@ spec:
         {{- include "dremio.executor.podAnnotations" (list $ $engineName) | nindent 8}}
         {{- include "dremio.executor.prometheusAnnotations" (list $ $engineName) | nindent 8}}
     spec:
+      hostAliases:
+        - ip: "172.25.0.242"
+          hostnames:
+            - "hdfs-spark-source-0"
       {{- include "dremio.executor.serviceAccount" (list $ $engineName) | nindent 6}}
       {{- include "dremio.executor.kubernetes.terminationGracePeriodSeconds" (list $ $engineName) | nindent 6}}
       {{- include "dremio.executor.nodeSelector" (list $ $engineName) | nindent 6}}
