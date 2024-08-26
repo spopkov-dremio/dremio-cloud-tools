@@ -123,6 +123,10 @@ coordinator:
       # kubectl create secret tls ${TLS_SECRET_NAME} --key ${KEY_FILE} --cert ${CERT_FILE}
       secret: dremio-tls-secret-flight
 
+  # Metrics
+  metrics:
+    port: 9094
+
   # Startup Probe
   startupProbe:
     # Max timeout for the probe is calculated as failureThreshold * periodSeconds
